@@ -22,13 +22,17 @@ def aOp(c):
 def genTree(c,n):
     t=treelib.Tree()
     nd=t.create_node(c,gentag())
+    if c==1:#leaf
+        return t
+    if n==0:
+        return t
     cs=next(c)
     for child in cs:
         new_tree=genTree(child,n-1)
         t.paste(nd.identifier, new_tree) 
     return t
 def bOp(c):
-    t=genTree(c,5)
+    t=genTree(c,2)
     t.show()
 
 def bOp_random(c):
