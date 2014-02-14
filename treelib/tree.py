@@ -85,7 +85,10 @@ class Tree(object):
         """
         Check if the tree contains node of given id
         """
-        return True if nid in self._nodes else False
+        if nid in self._nodes:
+            return True
+        else:
+            return  False
 
 
     def parent(self, nid):
