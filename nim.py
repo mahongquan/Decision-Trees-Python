@@ -15,10 +15,11 @@ def next(c):
 	else:
 		return []
 def aOp(c):
-	cs=next(c)
-	if len(cs)>0:
-		return cs[0]
-	return c
+    return bOp_random(c)
+    cs=next(c)
+    if len(cs)>0:
+        return cs[0]
+    return c
 def genTree(c,n):
     t=treelib.Tree()
     nd=t.create_node(c,gentag())
@@ -31,10 +32,48 @@ def genTree(c,n):
         new_tree=genTree(child,n-1)
         t.paste(nd.identifier, new_tree) 
     return t
+def E(x):
+    pass
+def maxarr(v):
+    v0=-100
+    for v1 in v:
+        if v1>v0:
+            v0=v1
+    return v0
+def minarr(v):
+    v0=1000000
+    for v1 in v:
+        if v1<v0:
+            v0=v1
+    return v0
+def VALUE(t,n):
+    cids=t[t.root].fpointer
+    if len(cids)==0:
+        if n% 2==0:
+            return 1
+        else:
+            return -1
+    vs=[]
+    for cid in cids:
+        vs.append(VALUE(t.subtree(cid),n-1))
+    if n % 2==0:
+        return maxarr(vs)
+    else:
+        return minarr(vs)
+def decsion(t):
+    cids=t[t.root].fpointer
+    if len(cids)==0:
+        return t[t.root].tag #leaf
+    des=-100
+    for cid in cids:
+        v=VALUE(t.subtree(cid),0)
+        if des<v:
+            des=v
+            despath=t[cid]
+    return despath.tag
 def bOp(c):
     t=genTree(c,2)
-    t.show()
-
+    return decsion(t)
 def bOp_random(c):
     cs=next(c)
     n=len(cs)
