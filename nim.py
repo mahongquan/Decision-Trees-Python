@@ -1,25 +1,24 @@
 import random
 import treelib
+import sys
 tagid=0
 def gentag():
-	global tagid
-	tagid+=1
-	return str(tagid)
+    global tagid
+    tagid+=1
+    return str(tagid)
 def next(c):
-	if(c>3):
-		return [c-1,c-2,c-3]
-	elif (c>2):
-		return [c-1,c-2]
-	elif (c>1):
-		return [c-1]
-	else:
-		return []
+    if(c>3):
+        return [c-1,c-2,c-3]
+    elif (c>2):
+        return [c-1,c-2]
+    elif (c>1):
+        return [c-1]
+    else:
+        return []
 def aOp(c):
-    return bOp_random(c)
-    cs=next(c)
-    if len(cs)>0:
-        return cs[0]
-    return c
+    t=genTree(c,20)
+    return decsion(t)
+    #return op_random(c)
 def genTree(c,n):
     t=treelib.Tree()
     nd=t.create_node(c,gentag())
@@ -57,24 +56,32 @@ def VALUE(t,n):
     for cid in cids:
         vs.append(VALUE(t.subtree(cid),n-1))
     if n % 2==0:
-        return maxarr(vs)
-    else:
         return minarr(vs)
+    else:
+        return maxarr(vs)
 def decsion(t):
+    #print "decsion"
+    #print "parent tree"
+    #t.show()
     cids=t[t.root].fpointer
     if len(cids)==0:
         return t[t.root].tag #leaf
     des=-100
+    despath=None
     for cid in cids:
-        v=VALUE(t.subtree(cid),0)
+        ctree=t.subtree(cid)
+        #ctree.show()
+        v=VALUE(ctree,0)
+        #print "value=",v
+        #raw_input()
         if des<v:
             des=v
             despath=t[cid]
     return despath.tag
 def bOp(c):
-    t=genTree(c,2)
+    t=genTree(c,20)
     return decsion(t)
-def bOp_random(c):
+def op_random(c):
     cs=next(c)
     n=len(cs)
     if n>0:
@@ -82,39 +89,40 @@ def bOp_random(c):
         return cs[at]
     return c
 def main():
-	c0=6
-	cur=c0
-	while True:
-		cs=next(cur)
-		if len(cs)>1:
-			print cs[0]
-			cur=cs[0]
-		else:
-			break
-	pass
+    c0=6
+    cur=c0
+    while True:
+        cs=next(cur)
+        if len(cs)>1:
+            print cs[0]
+            cur=cs[0]
+        else:
+            break
+    pass
 def main2():
-	c0=6
-	print "begin num="+str(c0)
-	cur=c0
-	aturn=True
-	while True:
-		if aturn:
-			new=aOp(cur)
-			if new!=cur:
-				print "A remove:"+str(cur-new)+",left:"+str(new)
-				cur=new
-				aturn=False
-			else:
-				print "A lose"
-				break
-		else:
-			new=bOp(cur)
-			if new!=cur:
-				print "B remove:"+str(cur-new)+",left:"+str(new)
-				cur=new
-				aturn=True
-			else:
-				print "B lose"
-				break
+    c0=int(sys.argv[1])
+    #c0=9
+    print "begin num="+str(c0)
+    cur=c0
+    aturn=True
+    while True:
+        if aturn:
+            new=aOp(cur)
+            if new!=cur:
+                print "A remove:"+str(cur-new)+",left:"+str(new)
+                cur=new
+                aturn=False
+            else:
+                print "A lose"
+                break
+        else:
+            new=bOp(cur)
+            if new!=cur:
+                print "B remove:"+str(cur-new)+",left:"+str(new)
+                cur=new
+                aturn=True
+            else:
+                print "B lose"
+                break
 main2()
-	
+    
