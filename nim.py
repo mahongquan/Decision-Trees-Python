@@ -1,11 +1,11 @@
 import random
 import treelib
 import sys
-tagid=0
+nodeId=0
 def genId():#tree node identifier
-    global tagid
-    tagid+=1
-    return str(tagid)
+    global nodeId
+    nodeId+=1
+    return str(nodeId)
 def next(c):#next state
     if(c>3):
         return [c-1,c-2,c-3]
