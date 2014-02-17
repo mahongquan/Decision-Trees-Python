@@ -2,11 +2,11 @@ import random
 import treelib
 import sys
 tagid=0
-def gentag():
+def genId():#tree node identifier
     global tagid
     tagid+=1
     return str(tagid)
-def next(c):
+def next(c):#next state
     if(c>3):
         return [c-1,c-2,c-3]
     elif (c>2):
@@ -15,13 +15,13 @@ def next(c):
         return [c-1]
     else:
         return []
-def aOp(c):
+def aOp(c):#A decide
     t=genTree(c,20)
     return decsion(t)
     #return op_random(c)
-def genTree(c,n):
+def genTree(c,n): #current state to tree
     t=treelib.Tree()
-    nd=t.create_node(c,gentag())
+    nd=t.create_node(c,genId())
     if c==1:#leaf
         return t
     if n==0:
@@ -45,7 +45,7 @@ def minarr(v):
         if v1<v0:
             v0=v1
     return v0
-def VALUE(t,n):
+def VALUE(t,n): #value tree
     cids=t[t.root].fpointer
     if len(cids)==0:
         if n% 2==0:
@@ -59,7 +59,7 @@ def VALUE(t,n):
         return minarr(vs)
     else:
         return maxarr(vs)
-def decsion(t):
+def decsion(t): #decide according to value of subtrees
     #print "decsion"
     #print "parent tree"
     #t.show()
@@ -78,17 +78,17 @@ def decsion(t):
             des=v
             despath=t[cid]
     return despath.tag
-def bOp(c):
+def bOp(c):#B decide
     t=genTree(c,20)
     return decsion(t)
-def op_random(c):
+def op_random(c):#decide random 
     cs=next(c)
     n=len(cs)
     if n>0:
         at=random.randint(0,n-1)
         return cs[at]
     return c
-def main():
+def main(): #state sequence by first path
     c0=6
     cur=c0
     while True:
@@ -99,7 +99,7 @@ def main():
         else:
             break
     pass
-def main2():
+def main2(): #A B decide turn by turn
     c0=int(sys.argv[1])
     #c0=9
     print "begin num="+str(c0)
