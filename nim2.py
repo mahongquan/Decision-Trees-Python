@@ -132,6 +132,8 @@ def main2(): #A B decide turn by turn
             else:
                 print "B lose"
                 break
+    showG(g)
+def showG(g):
     elarge=[(u,v) for (u,v,d) in g.edges(data=True) if d['weight'] >1.5]
     esmall=[(u,v) for (u,v,d) in g.edges(data=True) if d['weight'] <=1.5]
     pos=nx.spring_layout(g) # positions for all nodes
