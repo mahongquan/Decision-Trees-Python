@@ -52,7 +52,6 @@ class Tree:
 			r+=self.get_houdai(e[1])
 		return r
 	def add_tree(self,a,t):
-		print a,t.root
 		r=t.root
 		self.add_child(a,r)
 		pnode=self.graph.node[r]
@@ -69,7 +68,7 @@ class Tree:
 			sts.append(self.get_tree(c))
 		return sts
 	def get_tree(self,a):
-		cs=self.get_childs(a)
+		cs=self.get_houdai(a)
 		cs.append(a)
 		g1=self.graph.copy()
 		g=g1.subgraph(cs)
@@ -94,9 +93,9 @@ def test1():
 	g2.add_child(6,7)
 	g2.add_child(6,8)
 	g2.add_child(7,9)
-	print len(g2.get_subtrees(6))
 	g.add_tree(5,g2)
 	showTree(g)
 def test2():
 	pass
-test1()
+if __name__=="__main__":
+    test1()
