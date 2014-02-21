@@ -33,7 +33,17 @@ class TreeNode:
            g.add_node(c.value,level=1)
            g.add_edge(self.value,c.value)
            c.digraph(g)
+    def getroot(self):
+    	if self.parent==None:
+    		return self
+    	return self.parent.getroot()
+def sametree(a,b):
+	if a.getroot()==b.getroot():
+		return True
+	else:
+		return False
 def test1():
+	#tree1
     n1=TreeNode(1)
     n2=TreeNode(2)
     n1.add_child(n2)
@@ -46,6 +56,7 @@ def test1():
     n60=TreeNode(60)
     n5.add_child(n60)
 
+    #tree2
     n6=TreeNode(6)
     n7=TreeNode(7)
     n6.add_child(n7)
@@ -54,8 +65,10 @@ def test1():
     n9=TreeNode(9)
     n7.add_child(n9)
 
+    #tree1 link tree2
     n5.add_child(n6)
-    showTree(n1)
+    
+    print sametree(n5,n6)
 def test2():
     pass
 if __name__=="__main__":
