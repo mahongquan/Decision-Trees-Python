@@ -1,13 +1,29 @@
 import random
-import tree2
 import sys
 try:
     import matplotlib.pyplot as plt
 except:
     raise
 import networkx as nx
-g=nx.DiGraph()
-
+class TreeNode:
+    def __init__(self,value):#value is used here,node is used other places
+        self.parent=None
+        self.value=value
+        self.children=[]
+    def add_child(self,n):
+		n.parent=self
+		self.children.append(n)
+    def digraph(self,g):
+       if self.parent==None:
+           g.add_node(self.value,level=0)
+       for c in self.children:
+           g.add_node(c.value,level=1)
+           g.add_edge(self.value,c.value)
+           c.digraph(g)
+    def getroot(self):
+    	if self.parent==None:
+    		return self
+    	return self.parent.getroot()
 def next(c):#next state
     if(c>3):
         return [c-1,c-2,c-3]
@@ -22,7 +38,7 @@ def aOp(c):#A decide
     return decsion(t)
     #return op_random(c)
 def genTree(c,n): #current state to tree
-    t=tree2.TreeNode(c)
+    t=TreeNode(c)
     if c==1:#leaf
         return t
     if n==0:
@@ -93,6 +109,7 @@ def main(): #state sequence by first path
     pass
 def main2(): #A B decide turn by turn
     c0=int(sys.argv[1])
+    g=nx.DiGraph()
     g.add_node(c0)
     print "begin num="+str(c0)
     cur=c0
